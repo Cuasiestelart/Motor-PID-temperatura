@@ -144,3 +144,15 @@ secrets.h
 4. Crear el archivo `secrets.h` con tus credenciales de red y ThingSpeak.
 5. Seleccionar la placa **ESP32 Dev Module** y el puerto COM asignado.
 6. Compilar y cargar el firmware.
+
+---
+
+## 📊 Pipeline de Datos y Analítica (`pipeline_datos_temperatura`)
+
+El repositorio incluye el pipeline desarrollado en Python / Google Colab para procesar los registros generados en la tarjeta MicroSD durante las pruebas del deshidratador:
+
+* **Estandarización de Esquema:** Detección automática y homologación de formatos (9 y 10 columnas) según el estado del relé.
+* **Filtrado de Outliers:** Sustitución de lecturas anómalas ($> 100$) mediante propagación de estado previo (`ffill`).
+* **Imputación por Gradiente:** Reconstrucción de lecturas faltantes en sensores secundarios mediante el diferencial térmico respecto al sensor principal.
+* **Ventana Solar Útil (10:00 - 16:15):** Filtrado del horario de mayor radiación y generación de gráficas multieje (temperatura, humedad relativa y potencia del actuador).
+* **Consumo Energético:** Modelado de potencia del servomotor y cálculo de consumo eléctrico estimado por jornada solar (6 horas).
